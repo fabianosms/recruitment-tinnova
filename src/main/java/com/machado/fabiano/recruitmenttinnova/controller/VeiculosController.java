@@ -49,10 +49,10 @@ public class VeiculosController {
     }
 
     @GetMapping("/decada/{decada}")
-    public Long contarVeiculosPorDecada(Integer decada) {
+    public Long contarVeiculosPorDecada(@PathVariable Integer decada) {
 
         Integer inicio = decada;
-        Integer fim = decada + 10;
+        Integer fim = decada + 9;
 
         return veiculoRepository.countByAnoBetween(inicio, fim);
     }
