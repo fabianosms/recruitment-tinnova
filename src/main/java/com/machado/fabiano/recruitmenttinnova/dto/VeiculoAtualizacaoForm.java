@@ -2,8 +2,11 @@ package com.machado.fabiano.recruitmenttinnova.dto;
 
 import com.machado.fabiano.recruitmenttinnova.model.Marca;
 import com.machado.fabiano.recruitmenttinnova.model.Veiculo;
+import com.machado.fabiano.recruitmenttinnova.repository.MarcaRepository;
 import com.machado.fabiano.recruitmenttinnova.repository.VeiculoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,19 +22,23 @@ public class VeiculoAtualizacaoForm {
 
     private String vendido;
 
-    public Veiculo toVeiculo() {
+    public Veiculo toVeiculo(MarcaRepository marcaRepository) {
         if (Objects.equals(vendido, "Sim")) {
             vendido = "true";
         } else {
             vendido = "false";
         }
 
-        Marca novaMarca = new Marca(marca);
+        Marca novaMarca = marcaRepository.findByNome(marca);
+
+        if (novaMarca == null) {
+            throw new EntityNotFoundException("Nome de marca inválido");
+        }
 
         return new Veiculo(veiculo, novaMarca, ano, descricao, Boolean.parseBoolean(vendido));
     }
 
-    public Veiculo atualizar(Long id, VeiculoRepository veiculoRepository) {
+    public Veiculo atualizar(Long id, VeiculoRepository veiculoRepository, MarcaRepository marcaRepository) {
 
         if (Objects.equals(vendido, "Sim")) {
             vendido = "true";
@@ -39,7 +46,11 @@ public class VeiculoAtualizacaoForm {
             vendido = "false";
         }
 
-        Marca novaMarca = new Marca(marca);
+        Marca novaMarca = marcaRepository.findByNome(marca);
+
+        if (novaMarca == null) {
+            throw new EntityNotFoundException("Nome de marca inválido");
+        }
 
         Veiculo veiculo = veiculoRepository.getReferenceById(id);
         veiculo.setVeiculo(this.veiculo);

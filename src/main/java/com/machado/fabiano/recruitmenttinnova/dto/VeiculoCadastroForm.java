@@ -4,6 +4,7 @@ import com.machado.fabiano.recruitmenttinnova.model.Marca;
 import com.machado.fabiano.recruitmenttinnova.model.Veiculo;
 import com.machado.fabiano.recruitmenttinnova.repository.MarcaRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Objects;
 
 public class VeiculoCadastroForm {
@@ -18,14 +19,18 @@ public class VeiculoCadastroForm {
 
     private String vendido;
 
-    public Veiculo toVeiculo() {
+    public Veiculo toVeiculo(MarcaRepository marcaRepository) {
         if (Objects.equals(vendido, "Sim")) {
             vendido = "true";
         } else {
             vendido = "false";
         }
 
-        Marca novaMarca = new Marca(marca);
+        Marca novaMarca = marcaRepository.findByNome(marca);
+
+        if (novaMarca == null) {
+            throw new EntityNotFoundException("Nome de marca inválido");
+        }
 
         return new Veiculo(veiculo, novaMarca, ano, descricao, Boolean.parseBoolean(vendido));
     }
