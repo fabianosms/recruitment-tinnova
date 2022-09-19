@@ -1,8 +1,10 @@
 package com.machado.fabiano.recruitmenttinnova.dto;
 
+import com.machado.fabiano.recruitmenttinnova.model.Marca;
 import com.machado.fabiano.recruitmenttinnova.model.Veiculo;
 import com.machado.fabiano.recruitmenttinnova.repository.VeiculoRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -25,7 +27,13 @@ public class VeiculoAtualizacaoParcialForm {
             vendido = "false";
         }
 
-        return new Veiculo(veiculo, marca, ano, descricao, Boolean.parseBoolean(vendido));
+        Marca novaMarca = new Marca(marca);
+
+        return new Veiculo(veiculo, novaMarca, ano, descricao, Boolean.parseBoolean(vendido));
+    }
+
+    public Marca toMarca() {
+        return new Marca(marca);
     }
 
     public Veiculo atualizar(Long id, VeiculoRepository veiculoRepository) {
@@ -36,12 +44,31 @@ public class VeiculoAtualizacaoParcialForm {
             vendido = "false";
         }
 
-        Veiculo veiculo = veiculoRepository.getReferenceById(id);
-        veiculo.setVeiculo(this.veiculo);
-        veiculo.setMarca(this.marca);
-        veiculo.setAno(this.ano);
-        veiculo.setDescricao(this.descricao);
-        veiculo.setVendido(Boolean.parseBoolean(this.vendido));
+        Marca novaMarca = new Marca(marca);
+
+        Veiculo veiculo = veiculoRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+
+        if (this.veiculo != null) {
+            veiculo.setVeiculo(this.veiculo);
+        }
+
+        if (this.ano != null) {
+            veiculo.setAno(this.ano);
+        }
+
+        if (this.marca != null) {
+            veiculo.setMarca(novaMarca);
+        }
+
+        if (this.descricao != null) {
+            veiculo.setDescricao(this.descricao);
+        }
+
+        if (this.vendido != null) {
+            veiculo.setVendido(Boolean.parseBoolean(this.vendido));
+        }
+
         veiculo.setUpdated(LocalDateTime.now());
 
         return veiculo;

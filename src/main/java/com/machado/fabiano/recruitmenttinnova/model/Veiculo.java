@@ -13,7 +13,8 @@ public class Veiculo {
 
     private String veiculo;
 
-    private String marca;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Marca marca;
 
     private Integer ano;
 
@@ -28,7 +29,7 @@ public class Veiculo {
     public Veiculo() {
     }
 
-    public Veiculo(String veiculo, String marca, Integer ano, String descricao, Boolean vendido) {
+    public Veiculo(String veiculo, Marca marca, Integer ano, String descricao, Boolean vendido) {
         this.veiculo = veiculo;
         this.marca = marca;
         this.ano = ano;
@@ -54,7 +55,7 @@ public class Veiculo {
         return veiculo;
     }
 
-    public String getMarca() {
+    public Marca getMarca() {
         return marca;
     }
 
@@ -82,7 +83,7 @@ public class Veiculo {
         this.veiculo = veiculo;
     }
 
-    public void setMarca(String marca) {
+    public void setMarca(Marca marca) {
         this.marca = marca;
     }
 

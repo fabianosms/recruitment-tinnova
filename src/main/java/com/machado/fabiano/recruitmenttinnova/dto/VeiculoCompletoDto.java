@@ -29,7 +29,7 @@ public class VeiculoCompletoDto {
         }
 
         this.veiculo = veiculo.getVeiculo();
-        this.marca = veiculo.getMarca();
+        this.marca = veiculo.getMarca().getNome();
         this.ano = veiculo.getAno();
         this.descricao = veiculo.getDescricao();
         this.created = veiculo.getCreated();
