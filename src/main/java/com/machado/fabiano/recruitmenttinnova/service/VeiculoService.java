@@ -1,6 +1,9 @@
 package com.machado.fabiano.recruitmenttinnova.service;
 
 import com.machado.fabiano.recruitmenttinnova.dto.*;
+import com.machado.fabiano.recruitmenttinnova.dto.form.VeiculoAtualizacaoForm;
+import com.machado.fabiano.recruitmenttinnova.dto.form.VeiculoAtualizacaoParcialForm;
+import com.machado.fabiano.recruitmenttinnova.dto.form.VeiculoCadastroForm;
 import com.machado.fabiano.recruitmenttinnova.model.Marca;
 import com.machado.fabiano.recruitmenttinnova.model.Veiculo;
 import com.machado.fabiano.recruitmenttinnova.repository.MarcaRepository;
@@ -27,32 +30,60 @@ public class VeiculoService {
     private MarcaRepository marcaRepository;
 
     /**
-     * Método para listar todos os veículos
-     * @return List<VeiculoCompletoDto>
+     * Lista todos os veículos ou retorna conforme os parâmetros inseridos na url
+     * @param marca nome da marca do veículo a ser listado
+     * @param ano ano do veículo a ser listado
+     * @return Lista de veículos conforme os critérios selecionados
      */
-    public List<Veiculo> listarVeiculos () {
-        return veiculoRepository.findAll();
+    public List<Veiculo> listarVeiculos (String marca, Integer ano) {
+        if (marca == null && ano == null) {
+            return veiculoRepository.findAll();
+        }
+
+        if (marca == null) {
+            return veiculoRepository.findByAno(ano);
+        }
+
+        if (ano == null) {
+            return veiculoRepository.findByMarcaNome(marca);
+        }
+
+        return veiculoRepository.findByMarcaNomeAndAno(marca, ano);
     }
 
     /**
-     * Método que retorna a descrição de um veículo pelo id
-     * @param id
-     * @return VeiculoCompletoDto
+     * Gera a descrição de um veículo conforme o id
+     * @param id id do veículo, conforme o banco de dados
+     * @return Informação detalhada do veículo selecionado
      */
     public VeiculoCompletoDto buscarUmVeiculo(Long id) {
 
         Veiculo veiculo = veiculoRepository.getReferenceById(id);
+
         return new VeiculoCompletoDto(veiculo);
     }
 
+    /**
+     * Lista todos os veículos criados na última semana
+     * @return Lista dos veículos
+     */
     public List<Veiculo> buscarVeiculosUltimaSemana() {
         return veiculoRepository.findByCreatedBetween(LocalDateTime.now().minusWeeks(1), LocalDateTime.now());
     }
 
+    /**
+     * Realiza a contagem dos veículos não vendidos
+     * @return Valor da soma dos veículos
+     */
     public Long contarVeiculosNaoVendidos() {
         return veiculoRepository.countByVendidoFalse();
     }
 
+    /**
+     * Realiza a contagem dos veículos conforme a década inserida
+     * @param decada década desejada, representada por seu ano de início (ex.: "1980", "2010")
+     * @return Valor da soma dos veículos
+     */
     public Long contarVeiculosPorDecada(@PathVariable Integer decada) {
 
         Integer inicio = decada;
@@ -61,6 +92,10 @@ public class VeiculoService {
         return veiculoRepository.countByAnoBetween(inicio, fim);
     }
 
+    /**
+     * Exibe a distribuição dos veículos conforme os fabricantes
+     * @return Lista com o nome de cada marca, seguida da correspondente contagem de veículos
+     */
     public Map<String, Long> contarVeiculosPorMarca() {
 
         List<Marca> listaMarcas = marcaRepository.findAll();
@@ -76,6 +111,11 @@ public class VeiculoService {
         return map;
     }
 
+    /**
+     * Cadastra um veículo no banco de dados
+     * @param form formulário em JSON com os dados a ser cadastrados
+     * @return Informação detalhada do veículo cadastrado
+     */
     @Transactional
     public ResponseEntity<VeiculoCadastroDto> cadastrarVeiculo(@RequestBody VeiculoCadastroForm form) {
 
@@ -85,6 +125,12 @@ public class VeiculoService {
         return ResponseEntity.status(HttpStatus.CREATED).body(new VeiculoCadastroDto(veiculo));
     }
 
+    /**
+     * Atualiza os dados de um veículo cadastrado
+     * @param id id do veículo a ser atualizado
+     * @param form formulário em JSON com todos os dados do veículo
+     * @return Informação detalhada do veículo atualizado
+     */
     @Transactional
     public ResponseEntity<VeiculoCompletoDto> atualizarVeiculo(@PathVariable Long id, @RequestBody VeiculoAtualizacaoForm form) {
 
@@ -93,17 +139,28 @@ public class VeiculoService {
         return ResponseEntity.ok(new VeiculoCompletoDto(veiculo));
     }
 
+    /**
+     * Atualiza apenas alguns dados de um veículo cadastrado
+     * @param id id do veículo a ser atualizado
+     * @param form formulário em JSON, somente com os dados a ser atualizados
+     * @return Informação detalhada do veículo atualizado
+     */
     @Transactional
     public ResponseEntity<VeiculoCompletoDto> atualizarVeiculoParte(@PathVariable Long id, @RequestBody VeiculoAtualizacaoParcialForm form) {
 
-        Veiculo veiculo = form.atualizarParcial(id, veiculoRepository, marcaRepository);
+        Veiculo veiculo = form.atualizar(id, veiculoRepository, marcaRepository);
 
         return ResponseEntity.ok(new VeiculoCompletoDto(veiculo));
     }
 
+    /**
+     * Remove um veículo do banco de dados
+     * @param id id do veículo a ser removido
+     * @return Mensagem de confirmação da exclusão
+     */
     @Transactional
-    public ResponseEntity<?> removerVeiculo(@PathVariable Long id) {
+    public ResponseEntity<String> removerVeiculo(@PathVariable Long id) {
         veiculoRepository.deleteById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).body("Veículo removido com sucesso");
     }
 }

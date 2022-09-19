@@ -1,15 +1,16 @@
-package com.machado.fabiano.recruitmenttinnova.dto;
+package com.machado.fabiano.recruitmenttinnova.dto.form;
 
 import com.machado.fabiano.recruitmenttinnova.model.Marca;
 import com.machado.fabiano.recruitmenttinnova.model.Veiculo;
 import com.machado.fabiano.recruitmenttinnova.repository.MarcaRepository;
 import com.machado.fabiano.recruitmenttinnova.repository.VeiculoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class VeiculoAtualizacaoParcialForm {
+public class VeiculoAtualizacaoForm {
 
     private String veiculo;
 
@@ -37,11 +38,7 @@ public class VeiculoAtualizacaoParcialForm {
         return new Veiculo(veiculo, novaMarca, ano, descricao, Boolean.parseBoolean(vendido));
     }
 
-    public Marca toMarca() {
-        return new Marca(marca);
-    }
-
-    public Veiculo atualizarParcial(Long id, VeiculoRepository veiculoRepository, MarcaRepository marcaRepository) {
+    public Veiculo atualizar(Long id, VeiculoRepository veiculoRepository, MarcaRepository marcaRepository) {
 
         if (Objects.equals(vendido, "Sim")) {
             vendido = "true";
@@ -55,29 +52,12 @@ public class VeiculoAtualizacaoParcialForm {
             throw new EntityNotFoundException("Nome de marca inválido");
         }
 
-        Veiculo veiculo = veiculoRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-
-        if (this.veiculo != null) {
-            veiculo.setVeiculo(this.veiculo);
-        }
-
-        if (this.ano != null) {
-            veiculo.setAno(this.ano);
-        }
-
-        if (this.marca != null) {
-            veiculo.setMarca(novaMarca);
-        }
-
-        if (this.descricao != null) {
-            veiculo.setDescricao(this.descricao);
-        }
-
-        if (this.vendido != null) {
-            veiculo.setVendido(Boolean.parseBoolean(this.vendido));
-        }
-
+        Veiculo veiculo = veiculoRepository.getReferenceById(id);
+        veiculo.setVeiculo(this.veiculo);
+        veiculo.setMarca(novaMarca);
+        veiculo.setAno(this.ano);
+        veiculo.setDescricao(this.descricao);
+        veiculo.setVendido(Boolean.parseBoolean(this.vendido));
         veiculo.setUpdated(LocalDateTime.now());
 
         return veiculo;

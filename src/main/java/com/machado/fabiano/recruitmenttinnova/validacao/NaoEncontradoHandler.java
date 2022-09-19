@@ -14,13 +14,13 @@ public class NaoEncontradoHandler {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(EntityNotFoundException.class)
-    public String notFound(EntityNotFoundException exception) {
-        return "Nome de marca inválido";
+    public ResponseEntity<String> notFound(EntityNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nome de marca inválido ou ID não encontrado");
     }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(EmptyResultDataAccessException.class)
-    public String notFound(EmptyResultDataAccessException exception) {
-        return "ID não encontrado";
+    public ResponseEntity<String> notFound(EmptyResultDataAccessException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ID não encontrado");
     }
 }

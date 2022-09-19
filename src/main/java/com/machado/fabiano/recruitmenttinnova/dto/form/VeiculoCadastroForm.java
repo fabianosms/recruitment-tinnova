@@ -1,4 +1,4 @@
-package com.machado.fabiano.recruitmenttinnova.dto;
+package com.machado.fabiano.recruitmenttinnova.dto.form;
 
 import com.machado.fabiano.recruitmenttinnova.model.Marca;
 import com.machado.fabiano.recruitmenttinnova.model.Veiculo;
@@ -33,10 +33,6 @@ public class VeiculoCadastroForm {
         }
 
         return new Veiculo(veiculo, novaMarca, ano, descricao, Boolean.parseBoolean(vendido));
-    }
-
-    public Marca toMarca() {
-        return new Marca(marca);
     }
 
     public String getVeiculo() {

@@ -1,19 +1,15 @@
 package com.machado.fabiano.recruitmenttinnova.controller;
 
 import com.machado.fabiano.recruitmenttinnova.dto.*;
-import com.machado.fabiano.recruitmenttinnova.model.Marca;
+import com.machado.fabiano.recruitmenttinnova.dto.form.VeiculoAtualizacaoForm;
+import com.machado.fabiano.recruitmenttinnova.dto.form.VeiculoAtualizacaoParcialForm;
+import com.machado.fabiano.recruitmenttinnova.dto.form.VeiculoCadastroForm;
 import com.machado.fabiano.recruitmenttinnova.model.Veiculo;
-import com.machado.fabiano.recruitmenttinnova.repository.MarcaRepository;
-import com.machado.fabiano.recruitmenttinnova.repository.VeiculoRepository;
 import com.machado.fabiano.recruitmenttinnova.service.VeiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +21,8 @@ public class VeiculosController {
     private VeiculoService veiculoService;
 
     @GetMapping
-    public List<Veiculo> listarVeiculos () {
-        return veiculoService.listarVeiculos();
+    public List<Veiculo> listarVeiculos (@RequestParam(required = false) String marca, Integer ano) {
+        return veiculoService.listarVeiculos(marca, ano);
     }
 
     @GetMapping("/{id}")
@@ -38,6 +34,11 @@ public class VeiculosController {
     public List<Veiculo> buscarVeiculosUltimaSemana() {
         return veiculoService.buscarVeiculosUltimaSemana();
     }
+
+//    @GetMapping
+//    public List<Veiculo> listarVeiculosPorParametros(@RequestParam(required = false) Integer ano) {
+//        return veiculoService.listarVeiculosPorParametros(ano);
+//    }
 
     @GetMapping("/naovendidos")
     public Long contarVeiculosNaoVendidos() {

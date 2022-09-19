@@ -13,7 +13,7 @@ public class Veiculo {
 
     private String veiculo;
 
-    @ManyToOne // (cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Marca marca;
 
     private Integer ano;

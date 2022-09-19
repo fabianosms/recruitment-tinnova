@@ -14,6 +14,12 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, Long> {
 
     Optional<Veiculo> findById(Long id);
 
+    List<Veiculo> findByAno(Integer ano);
+
+    List<Veiculo> findByMarcaNome(String marca);
+
+    List<Veiculo> findByMarcaNomeAndAno(String marca, Integer ano);
+
     Long countByVendidoFalse();
 
     Long countByAnoBetween(Integer primeiraData, Integer segundaData);
