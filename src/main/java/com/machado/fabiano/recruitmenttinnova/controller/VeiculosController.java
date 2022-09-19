@@ -5,6 +5,7 @@ import com.machado.fabiano.recruitmenttinnova.model.Marca;
 import com.machado.fabiano.recruitmenttinnova.model.Veiculo;
 import com.machado.fabiano.recruitmenttinnova.repository.MarcaRepository;
 import com.machado.fabiano.recruitmenttinnova.repository.VeiculoRepository;
+import com.machado.fabiano.recruitmenttinnova.service.VeiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,89 +22,55 @@ import java.util.Map;
 public class VeiculosController {
 
     @Autowired
-    private VeiculoRepository veiculoRepository;
-
-    @Autowired
-    private MarcaRepository marcaRepository;
+    private VeiculoService veiculoService;
 
     @GetMapping
     public List<Veiculo> listarVeiculos () {
-        return veiculoRepository.findAll();
+        return veiculoService.listarVeiculos();
     }
 
     @GetMapping("/{id}")
     public VeiculoCompletoDto buscarUmVeiculo(@PathVariable Long id) {
-
-        Veiculo veiculo = veiculoRepository.getReferenceById(id);
-        return new VeiculoCompletoDto(veiculo);
+        return veiculoService.buscarUmVeiculo(id);
     }
 
     @GetMapping("/ultimasemana")
     public List<Veiculo> buscarVeiculosUltimaSemana() {
-        return veiculoRepository.findByCreatedBetween(LocalDateTime.now().minusWeeks(1), LocalDateTime.now());
+        return veiculoService.buscarVeiculosUltimaSemana();
     }
 
     @GetMapping("/naovendidos")
     public Long contarVeiculosNaoVendidos() {
-        return veiculoRepository.countByVendidoFalse();
+        return veiculoService.contarVeiculosNaoVendidos();
     }
 
     @GetMapping("/decada/{decada}")
     public Long contarVeiculosPorDecada(@PathVariable Integer decada) {
-
-        Integer inicio = decada;
-        Integer fim = decada + 9;
-
-        return veiculoRepository.countByAnoBetween(inicio, fim);
+        return veiculoService.contarVeiculosPorDecada(decada);
     }
 
     @GetMapping("/marcas")
     public Map<String, Long> contarVeiculosPorMarca() {
-
-        List<Marca> listaMarcas = marcaRepository.findAll();
-        HashMap<String, Long> map = new HashMap<>();
-
-        for (Marca marca : listaMarcas) {
-            String marcaNome = marca.getNome();
-            if (veiculoRepository.countByMarca(marca) != 0) {
-                map.put(marcaNome, veiculoRepository.countByMarca(marca));
-            }
-        }
-
-        return map;
+        return veiculoService.contarVeiculosPorMarca();
     }
 
     @PostMapping
     public ResponseEntity<VeiculoCadastroDto> cadastrarVeiculo(@RequestBody VeiculoCadastroForm form) {
-
-        Veiculo veiculo = form.toVeiculo(marcaRepository);
-        veiculoRepository.save(veiculo);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(new VeiculoCadastroDto(veiculo));
+        return veiculoService.cadastrarVeiculo(form);
     }
 
     @PutMapping("/{id}")
-    @Transactional
     public ResponseEntity<VeiculoCompletoDto> atualizarVeiculo(@PathVariable Long id, @RequestBody VeiculoAtualizacaoForm form) {
-
-        Veiculo veiculo = form.atualizar(id, veiculoRepository, marcaRepository);
-
-        return ResponseEntity.ok(new VeiculoCompletoDto(veiculo));
+        return veiculoService.atualizarVeiculo(id, form);
     }
 
     @PatchMapping ("/{id}")
-    @Transactional
     public ResponseEntity<VeiculoCompletoDto> atualizarVeiculoParte(@PathVariable Long id, @RequestBody VeiculoAtualizacaoParcialForm form) {
-
-        Veiculo veiculo = form.atualizarParcial(id, veiculoRepository, marcaRepository);
-
-        return ResponseEntity.ok(new VeiculoCompletoDto(veiculo));
+        return veiculoService.atualizarVeiculoParte(id, form);
     }
 
     @DeleteMapping("{id}")
-    @Transactional
     public ResponseEntity<?> removerVeiculo(@PathVariable Long id) {
-        veiculoRepository.deleteById(id);
-        return ResponseEntity.ok().build();
+        return veiculoService.removerVeiculo(id);
     }
 }
