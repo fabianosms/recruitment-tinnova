@@ -30,6 +30,16 @@ Aplicação back-end Java API RESTful, utilizando JSON, com a manipulação de i
 - IntelliJ IDEA 2022.2.1 Ultimate Edition
 
 
+## Arquitetura
+
+- [Model](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/model) contém as entidades elementares do banco de dados
+- [Controller](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/controller) recebe as requisições HTTP e invoca os métodos da Service
+- [Service](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/service) contém a lógica e as regras de negócio, assim como o acesso aos Repositories
+- [Repository](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/repository) contém os métodos de busca ao banco de dados
+- [DTO](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/dto) contém os modelos de transferência de dados de entrada (Form) e saída (DTO)
+- [Exceptions](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/exceptions) contém os handlers das eventuais exceções
+
+
 ## Endpoints
 
 Os endpoints são baseados em localhost, porta 8080, e foram devidamente testados com o Postman, juntamente com o MySQL 5.5
