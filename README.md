@@ -1,6 +1,13 @@
 <h1 align="center">
     <br>Tinnova - avaliação prática<br/>
 </h1>
+
+<h2 align="center">
+    <br>Questões 1 a 4<br/>
+</h2>
+
+- As quatro primeiras questões foram alocadas em um [repositório específico](https://github.com/fabianosms/recruitment-tinnova-questoes1a4)
+
 <h2 align="center">
     <br>Questão 5<br/>
 </h2>
@@ -21,6 +28,25 @@ Aplicação back-end Java API RESTful, utilizando JSON, com a manipulação de i
 - Git
 - Postman (testes API)
 - IntelliJ IDEA 2022.2.1 Ultimate Edition
+
+
+## Arquitetura
+
+- [Model](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/model) contém as entidades elementares do banco de dados
+- [Controller](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/controller) recebe as requisições HTTP e invoca os métodos da Service
+- [Service](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/service) contém a lógica e as regras de negócio, assim como o acesso aos Repositories
+- [Repository](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/repository) contém os métodos de busca ao banco de dados
+- [DTO](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/dto) contém os modelos de transferência de dados de entrada (Form) e saída (DTO)
+- [Exceptions](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/exceptions) contém os handlers das eventuais exceções
+
+
+## Outros elementos relevantes
+
+- [pom.xml](https://github.com/fabianosms/recruitment-tinnova/blob/master/pom.xml) - contém principalmente as dependências utilizadas no projeto
+- [application.properties](https://github.com/fabianosms/recruitment-tinnova/blob/master/src/main/resources/application.properties) - contém as configurações de acesso e persistência no banco de dados
+- [application.properties](https://github.com/fabianosms/recruitment-tinnova/blob/master/src/main/resources/application.properties) - contém as configurações de acesso e persistência no banco de dados
+- [schema.sql](https://github.com/fabianosms/recruitment-tinnova/blob/master/src/main/resources/schema.sql) - cria e configura as tabelas do banco de dados (a criação automática pelo Hibernate foi desabilitada)
+- [data.sql](https://github.com/fabianosms/recruitment-tinnova/blob/master/src/main/resources/data.sql) - popula automaticamente todas as marcas no banco de dados, o que garante a validação da grafia das marcas e a distribuição de veículos por marca
 
 
 ## Endpoints
