@@ -15,7 +15,6 @@ public class VeiculoCompletoDto {
 
     private String descricao;
 
-    @Pattern(regexp = "sim|não", flags = Pattern.Flag.CASE_INSENSITIVE)
     private String vendido;
 
     private LocalDateTime created;

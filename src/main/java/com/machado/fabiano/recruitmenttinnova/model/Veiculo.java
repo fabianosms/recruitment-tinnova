@@ -38,15 +38,6 @@ public class Veiculo {
         this.created = LocalDateTime.now();
     }
 
-//    public Veiculo(String veiculo, String marca, Integer ano, String descricao, Boolean vendido, LocalDateTime updated) {
-//        this.veiculo = veiculo;
-//        this.marca = marca;
-//        this.ano = ano;
-//        this.descricao = descricao;
-//        this.vendido = vendido;
-//        this.updated = LocalDateTime.now();
-//    }
-
     public Long getId() {
         return id;
     }

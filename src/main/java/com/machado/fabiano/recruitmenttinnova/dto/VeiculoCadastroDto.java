@@ -3,6 +3,7 @@ package com.machado.fabiano.recruitmenttinnova.dto;
 import com.machado.fabiano.recruitmenttinnova.model.Veiculo;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class VeiculoCadastroDto {

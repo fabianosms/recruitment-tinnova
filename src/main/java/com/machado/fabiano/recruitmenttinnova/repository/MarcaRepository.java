@@ -12,5 +12,4 @@ public interface MarcaRepository extends JpaRepository<Marca, Long> {
     Marca findByNome(String nome);
 
     Long countByNome(String nome);
-
 }
