@@ -2,6 +2,7 @@ package com.machado.fabiano.recruitmenttinnova.dto;
 
 import com.machado.fabiano.recruitmenttinnova.model.Veiculo;
 
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 public class VeiculoCompletoDto {
@@ -14,6 +15,7 @@ public class VeiculoCompletoDto {
 
     private String descricao;
 
+    @Pattern(regexp = "sim|não", flags = Pattern.Flag.CASE_INSENSITIVE)
     private String vendido;
 
     private LocalDateTime created;

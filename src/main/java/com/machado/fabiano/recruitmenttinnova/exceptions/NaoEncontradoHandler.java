@@ -1,4 +1,4 @@
-package com.machado.fabiano.recruitmenttinnova.validacao;
+package com.machado.fabiano.recruitmenttinnova.exceptions;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;

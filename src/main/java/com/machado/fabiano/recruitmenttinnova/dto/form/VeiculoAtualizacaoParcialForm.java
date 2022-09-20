@@ -6,6 +6,7 @@ import com.machado.fabiano.recruitmenttinnova.repository.MarcaRepository;
 import com.machado.fabiano.recruitmenttinnova.repository.VeiculoRepository;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.Objects;
 

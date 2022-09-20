@@ -35,11 +35,6 @@ public class VeiculosController {
         return veiculoService.buscarVeiculosUltimaSemana();
     }
 
-//    @GetMapping
-//    public List<Veiculo> listarVeiculosPorParametros(@RequestParam(required = false) Integer ano) {
-//        return veiculoService.listarVeiculosPorParametros(ano);
-//    }
-
     @GetMapping("/naovendidos")
     public Long contarVeiculosNaoVendidos() {
         return veiculoService.contarVeiculosNaoVendidos();
