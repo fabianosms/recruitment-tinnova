@@ -1,6 +1,13 @@
 <h1 align="center">
     <br>Tinnova - avaliação prática<br/>
 </h1>
+
+<h2 align="center">
+    <br>Questões 1 a 4<br/>
+</h2>
+
+- As quatro primeiras questões foram alocadas em um [repositório específico](https://github.com/fabianosms/recruitment-tinnova-questoes1a4)
+
 <h2 align="center">
     <br>Questão 5<br/>
 </h2>
