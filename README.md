@@ -40,6 +40,15 @@ Aplicação back-end Java API RESTful, utilizando JSON, com a manipulação de i
 - [Exceptions](https://github.com/fabianosms/recruitment-tinnova/tree/master/src/main/java/com/machado/fabiano/recruitmenttinnova/exceptions) contém os handlers das eventuais exceções
 
 
+## Outros elementos relevantes
+
+- [pom.xml](https://github.com/fabianosms/recruitment-tinnova/blob/master/pom.xml) - contém principalmente as dependências utilizadas no projeto
+- [application.properties](https://github.com/fabianosms/recruitment-tinnova/blob/master/src/main/resources/application.properties) - contém as configurações de acesso e persistência no banco de dados
+- [application.properties](https://github.com/fabianosms/recruitment-tinnova/blob/master/src/main/resources/application.properties) - contém as configurações de acesso e persistência no banco de dados
+- [schema.sql](https://github.com/fabianosms/recruitment-tinnova/blob/master/src/main/resources/schema.sql) - cria e configura as tabelas do banco de dados (a criação automática pelo Hibernate foi desabilitada)
+- [data.sql](https://github.com/fabianosms/recruitment-tinnova/blob/master/src/main/resources/data.sql) - popula automaticamente todas as marcas no banco de dados, o que garante a validação da grafia das marcas e a distribuição de veículos por marca
+
+
 ## Endpoints
 
 Os endpoints são baseados em localhost, porta 8080, e foram devidamente testados com o Postman, juntamente com o MySQL 5.5
