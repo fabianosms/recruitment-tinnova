@@ -59,7 +59,7 @@ Os endpoints são baseados em localhost, porta 8080, e foram devidamente testado
 - http://localhost:8080/veiculos/{id} - retorna os detalhes de um veículo
 - http://localhost:8080/veiculos/ultimasemana - retorna os veículos cadastrados nos últimos 7 dias
 - http://localhost:8080/veiculos/naovendidos - retorna a contagem dos veículos não vendidos
-- http://localhost:8080/veiculos/decada/{decada} - retorna os veículos conforme o ano de fabricação na década inserida (ex.: "1980", "2010")
+- http://localhost:8080/veiculos/decada - retorna a distribuição de veículos, de acordo com a década de fabricação
 - http://localhost:8080/veiculos/marcas - retorna a distribuição de veículos, de acordo com cada fabricante
 
 *POST*
