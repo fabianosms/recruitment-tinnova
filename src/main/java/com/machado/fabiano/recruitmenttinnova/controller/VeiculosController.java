@@ -5,6 +5,7 @@ import com.machado.fabiano.recruitmenttinnova.dto.form.VeiculoAtualizacaoForm;
 import com.machado.fabiano.recruitmenttinnova.dto.form.VeiculoAtualizacaoParcialForm;
 import com.machado.fabiano.recruitmenttinnova.dto.form.VeiculoCadastroForm;
 import com.machado.fabiano.recruitmenttinnova.model.Veiculo;
+import com.machado.fabiano.recruitmenttinnova.repository.VeiculoRepository;
 import com.machado.fabiano.recruitmenttinnova.service.VeiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,9 +41,9 @@ public class VeiculosController {
         return veiculoService.contarVeiculosNaoVendidos();
     }
 
-    @GetMapping("/decada/{decada}")
-    public Long contarVeiculosPorDecada(@PathVariable Integer decada) {
-        return veiculoService.contarVeiculosPorDecada(decada);
+    @GetMapping("/decada")
+    public Map<String, String> contarVeiculosPorDecada() {
+        return veiculoService.contarVeiculosPorDecada();
     }
 
     @GetMapping("/marcas")

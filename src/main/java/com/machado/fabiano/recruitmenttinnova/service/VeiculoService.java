@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class VeiculoService {
@@ -81,16 +79,48 @@ public class VeiculoService {
     }
 
     /**
-     * Realiza a contagem dos veículos conforme a década inserida
-     * @param decada década desejada, representada por seu ano de início (ex.: "1980", "2010")
-     * @return Valor da soma dos veículos
+     * Exibe a distribuição dos veículos conforme a década de fabricação
+     * @return Lista com a década de fabricação, seguida da correspondente contagem de veículos
      */
-    public Long contarVeiculosPorDecada(@PathVariable Integer decada) {
+    public Map<String, String> contarVeiculosPorDecada() {
 
-        Integer inicio = decada;
-        Integer fim = decada + 9;
+        List<Veiculo> listaTodos = veiculoRepository.findAll();
+        List<Integer> listaDecadas = new ArrayList<>();
+        int tamanho = listaTodos.size();
+        Integer decada = 0;
 
-        return veiculoRepository.countByAnoBetween(inicio, fim);
+        for (Veiculo veiculo : listaTodos) {
+            Integer ano = veiculo.getAno();
+            char[] charsDecada = ano.toString().toCharArray();
+            int digitoDecada = Character.getNumericValue(charsDecada[2]);
+
+            if (ano < 1999) {
+                decada = Integer.parseInt("19" + digitoDecada + "0");
+                listaDecadas.add(decada);
+            }
+            if (ano > 1999) {
+                decada = Integer.parseInt("20" + digitoDecada + "0");
+                listaDecadas.add(decada);
+            }
+        }
+
+        Set<Integer> decadasUnicasUnsorted = new HashSet<Integer>(listaDecadas);
+
+        List<Integer> decadasUnicas = new ArrayList<>(decadasUnicasUnsorted);
+
+        decadasUnicas.sort(Comparator.naturalOrder());
+
+        TreeMap<String, String> map = new TreeMap<>();
+
+        for (Integer valor : decadasUnicas) {
+            Integer fim = valor + 9;
+            Long contagem = veiculoRepository.countByAnoBetween(decada, fim);
+            String decadaDe = "Década de " + valor + ":";
+            String veiculos = String.valueOf(contagem) + " veículos";
+            map.put(decadaDe, veiculos);
+        }
+
+        return map;
     }
 
     /**
