@@ -97,8 +97,7 @@ public class VeiculoService {
             if (ano < 1999) {
                 decada = Integer.parseInt("19" + digitoDecada + "0");
                 listaDecadas.add(decada);
-            }
-            if (ano > 1999) {
+            } else {
                 decada = Integer.parseInt("20" + digitoDecada + "0");
                 listaDecadas.add(decada);
             }
@@ -116,7 +115,7 @@ public class VeiculoService {
             Integer fim = valor + 9;
             Long contagem = veiculoRepository.countByAnoBetween(decada, fim);
             String decadaDe = "Década de " + valor + ":";
-            String veiculos = String.valueOf(contagem) + " veículos";
+            String veiculos = contagem + " veículos";
             map.put(decadaDe, veiculos);
         }
 
