@@ -94,10 +94,11 @@ public class VeiculoService {
             char[] charsDecada = ano.toString().toCharArray();
             int digitoDecada = Character.getNumericValue(charsDecada[2]);
 
-            if (ano <= 1999) {
+            if (ano < 1999) {
                 decada = Integer.parseInt("19" + digitoDecada + "0");
                 listaDecadas.add(decada);
-            } else {
+            }
+            if (ano > 1999) {
                 decada = Integer.parseInt("20" + digitoDecada + "0");
                 listaDecadas.add(decada);
             }
