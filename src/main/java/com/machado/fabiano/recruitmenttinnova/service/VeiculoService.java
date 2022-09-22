@@ -147,7 +147,7 @@ public class VeiculoService {
      * @return Informação detalhada do veículo cadastrado
      */
     @Transactional
-    public ResponseEntity<VeiculoCadastroDto> cadastrarVeiculo(@RequestBody VeiculoCadastroForm form) {
+    public ResponseEntity<VeiculoCadastroDto> cadastrarVeiculo(VeiculoCadastroForm form) {
 
         Veiculo veiculo = form.toVeiculo(marcaRepository);
         veiculoRepository.save(veiculo);
@@ -162,7 +162,7 @@ public class VeiculoService {
      * @return Informação detalhada do veículo atualizado
      */
     @Transactional
-    public ResponseEntity<VeiculoCompletoDto> atualizarVeiculo(@PathVariable Long id, @RequestBody VeiculoAtualizacaoForm form) {
+    public ResponseEntity<VeiculoCompletoDto> atualizarVeiculo(Long id, VeiculoAtualizacaoForm form) {
 
         Veiculo veiculo = form.atualizar(id, veiculoRepository, marcaRepository);
 
@@ -176,7 +176,7 @@ public class VeiculoService {
      * @return Informação detalhada do veículo atualizado
      */
     @Transactional
-    public ResponseEntity<VeiculoCompletoDto> atualizarVeiculoParte(@PathVariable Long id, @RequestBody VeiculoAtualizacaoParcialForm form) {
+    public ResponseEntity<VeiculoCompletoDto> atualizarVeiculoParte(Long id, VeiculoAtualizacaoParcialForm form) {
 
         Veiculo veiculo = form.atualizar(id, veiculoRepository, marcaRepository);
 
@@ -189,7 +189,7 @@ public class VeiculoService {
      * @return Mensagem de confirmação da exclusão
      */
     @Transactional
-    public ResponseEntity<String> removerVeiculo(@PathVariable Long id) {
+    public ResponseEntity<String> removerVeiculo(Long id) {
         veiculoRepository.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Veículo removido com sucesso");
     }
